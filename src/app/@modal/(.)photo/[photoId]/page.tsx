@@ -1,28 +1,20 @@
-import PhotoDisplay from "@/app/photo/[photoId]/PhotoDisplay"
-import type { PhotoData } from "@/app/photo/[photoId]/page"
-import { Modal } from "@/components/Modal"
+import PhotoDisplay from "@/app/photo/[photoId]/PhotoDisplay";
+import {Modal} from "@/components/Modal";
 
 type Props = {
-    params: {
-        photoId: string,
-    }
-}
+  params: {
+    photoId: string;
+  };
+};
 
-export default async function Photo({ params: { photoId } }: Props) {
+export default async function Photo({params: {photoId}}: Props) {
+  let data = await fetch(`https://fakestoreapi.in/api/products/${photoId}`)
+    .then((res) => res.json())
+    .then((res) => res);
 
-    const response = await fetch(`http://localhost:3500/images/${photoId}`, { cache: 'no-store' })
-
-    const photoData: PhotoData = await response.json()
-
-    if (!photoData?.id) {
-        return (
-            <h1 className="text-center">No Photo Found for that ID.</h1>
-        )
-    }
-
-    return (
-        <Modal>
-            <PhotoDisplay photoData={photoData} />
-        </Modal>
-    )
+  return (
+    <Modal>
+      <PhotoDisplay data={data?.product} key={data?.product?.id} />
+    </Modal>
+  );
 }
