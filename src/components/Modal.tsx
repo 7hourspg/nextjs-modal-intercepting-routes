@@ -21,7 +21,7 @@ export function Modal({
     return (
         <Dialog defaultOpen={true} open={true} onOpenChange={handleOpenChange}>
             <DialogOverlay>
-                <DialogContent className="overflow-y-hidden border border-red-700">
+                <DialogContent className="overflow-y-hidden">
                     {children}
                 </DialogContent>
             </DialogOverlay>
